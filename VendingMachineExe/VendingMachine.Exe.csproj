@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\VendingMachine.Commands\VendingMachine.Commands.csproj" />
     <ProjectReference Include="..\VendingMachine.Core\VendingMachine.Core.csproj" />
+    <ProjectReference Include="..\VendingMachine.Queries\VendingMachine.Queries.csproj" />
   </ItemGroup>
 
 </Project>

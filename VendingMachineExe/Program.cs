@@ -8,6 +8,7 @@ using VendingMachine.Exe.Infrastructure;
 using VendingMachine.Exe.Providers;
 using VendingMachine.Commands;
 using VendingMachine.Commands.Handlers;
+using VendingMachine.Queries;
 
 namespace VendingMachine
 {
@@ -22,16 +23,19 @@ namespace VendingMachine
                 .AddSingleton<CommandProcessor>()
                 .AddMediatR(typeof(SelectProductHandler).GetTypeInfo().Assembly)
                 .AddValidators()
-                .AddTransient(typeof(IRequestExceptionHandler<,>),typeof(ExceptionBehaviour<,>))
+                .AddTransient(typeof(IRequestExceptionHandler<,>), typeof(ExceptionBehaviour<,>))
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>))
                 .AddSingleton<IVendingMachineProvider, VendingMachineProvider>()
                 .BuildServiceProvider();
 
             var commandProcessor = serviceProvider.GetService<CommandProcessor>();
 
-            var result = commandProcessor.Execute(new SelectProduct("Espreso"));
+            var response = commandProcessor.Execute(new SelectProduct("Espresso"));
+            Console.Write(response);
 
+            var result = commandProcessor.Execute(new GetSelectedProductPrice());
             Console.WriteLine(result);
+
             Console.Read();
         }
     }

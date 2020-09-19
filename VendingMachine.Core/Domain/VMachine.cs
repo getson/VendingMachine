@@ -12,6 +12,10 @@ namespace VendingMachine.Core
         }
 
         internal State State { get; set; }
+        public int GetAmountToBePaid()
+        {
+            return State.PricesProvider.GetPrice(State.SelectedProduct);
+        }
 
         public void InsertCoins(IEnumerable<Coin> coins)
         {
