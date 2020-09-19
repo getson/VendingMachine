@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using System.Linq;
 using System.Reflection;
-using VendinMachine.Commands;
+using VendingMachine.Commands;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -25,9 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 foreach (var interfaceType in validatorType.GetInterfaces().Where(x => x.IsGenericType))
                 {
                     services.AddTransient(interfaceType, validatorType);
-
                 }
-
             }
             return services;
         }

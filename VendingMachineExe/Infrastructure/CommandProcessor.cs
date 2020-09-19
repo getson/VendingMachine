@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace VendingMachine.Exe.Infrastructure
 {
@@ -21,7 +19,7 @@ namespace VendingMachine.Exe.Infrastructure
                 var result = _mediator.Send(command)
                     .GetAwaiter()
                     .GetResult();
-                
+
                 return result?.ToString();
             }
             catch (Exception ex)

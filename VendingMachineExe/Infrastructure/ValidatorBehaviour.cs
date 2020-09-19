@@ -37,6 +37,8 @@ namespace VendingMachine.Exe.Infrastructure
             return await next();
         }
     }
+
+
     public class VendingMachineValiationException : Exception
     {
         public VendingMachineValiationException(string message)

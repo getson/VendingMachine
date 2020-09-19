@@ -1,23 +1,22 @@
 ﻿using MediatR;
-using System;
 using VendingMachine.Core;
 
 namespace VendingMachine.Commands.Handlers
 {
-    public class SelectProductHandler : RequestHandler<SelectProduct>
+    public class ProcessOrderHandler : RequestHandler<ProcessOrder>
     {
         private readonly IVendingMachineProvider _vendingMachineProvider;
 
-        public SelectProductHandler(IVendingMachineProvider vendingMachineProvider)
+        public ProcessOrderHandler(IVendingMachineProvider vendingMachineProvider)
         {
             _vendingMachineProvider = vendingMachineProvider;
         }
 
-        protected override void Handle(SelectProduct request)
+        protected override void Handle(ProcessOrder request)
         {
             var machine = _vendingMachineProvider.GetVendingMachine();
 
-            machine.SelectProduct(Enum.Parse<Product>(request.ProductName));
+            machine.ProcessOrder();
         }
     }
 }

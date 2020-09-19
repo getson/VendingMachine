@@ -1,7 +1,9 @@
-﻿namespace VendinMachine.Core
+﻿using VendingMachine.Core;
+
+namespace VendingMachine.Core
 {
     public interface IVendingMachineProvider
     {
-        VendingMachine GetVendingMachine();
+        VMachine GetVendingMachine();
     }
 }

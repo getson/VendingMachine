@@ -1,15 +1,20 @@
 ﻿using FluentValidation;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using VendingMachine.Core;
 
-namespace VendinMachine.Commands.Validators
+namespace VendingMachine.Commands.Validators
 {
     public class SelectProductValidator : AbstractValidator<SelectProduct>
     {
         public SelectProductValidator()
         {
+            var productNames = Enum.GetNames(typeof(Product));
+
             RuleFor(x => x.ProductName).NotEmpty();
+            RuleFor(x => x.ProductName)
+                .Must(x => productNames.Contains(x))
+                .WithMessage("Selected product is not valid!");
         }
     }
 }
