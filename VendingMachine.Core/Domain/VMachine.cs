@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using VendingMachine.Core.Domain;
 
 namespace VendingMachine.Core
@@ -39,6 +41,11 @@ namespace VendingMachine.Core
         public void ProcessOrder()
         {
             State.ProcessOrder();
+        }
+
+        public ReadOnlyDictionary<Product,int> GetProductsWithPrices()
+        {
+            return State.PricesProvider.GetAll();
         }
     }
 }

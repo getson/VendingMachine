@@ -16,7 +16,7 @@ namespace VendingMachine.CLI.Infrastructure
         private readonly ICommandPrompt _prompt;
         private readonly ICommandProvider _command;
 
-        private const string _cancelPurchaseMessage = "Do you want to cancel the purchase?";
+        private const string _cancelPurchaseMessage = "Do you want to cancel the purchase [y/n]?";
         private const string _cancel = "cancel";
 
         public CommandProcessor(IMediator mediator, ITerminal terminal, ICommandPrompt prompt, ICommandProvider command)
@@ -69,7 +69,9 @@ namespace VendingMachine.CLI.Infrastructure
 
                     var product = _command.GetProduct();
 
-                    _mediator.Send(new SelectProduct(product));
+                    _mediator.Send(new SelectProduct(product))
+                        .GetAwaiter()
+                        .GetResult();
 
                     var result = _mediator
                         .Send(new GetSelectedProductPrice())
@@ -90,7 +92,9 @@ namespace VendingMachine.CLI.Infrastructure
                     {
                         try
                         {
-                            _mediator.Send(new InsertCoins(coins));
+                            _mediator.Send(new InsertCoins(coins))
+                                .GetAwaiter()
+                                .GetResult();
                             break;
                         }
                         catch (NotFullPaidException ex)
@@ -111,7 +115,9 @@ namespace VendingMachine.CLI.Infrastructure
                         break;
                     }
 
-                    _mediator.Send(new ProcessOrder());
+                    _mediator.Send(new ProcessOrder())
+                        .GetAwaiter()
+                        .GetResult();
 
                     _terminal.WriteLine("The purchase completed!");
                     _terminal.WriteLine("Thank you!");
@@ -127,10 +133,11 @@ namespace VendingMachine.CLI.Infrastructure
             void CancelOrder()
             {
                 _terminal.WriteLine("The purchase canceled!");
-                _mediator.Send(new CancelOrder());
+                _mediator.Send(new CancelOrder())
+                    .GetAwaiter()
+                    .GetResult();
             }
         }
-
         private void WriteSection(string message)
         {
             _terminal.WriteLine();

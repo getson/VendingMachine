@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
+using System.Net.Http.Headers;
 
 namespace VendingMachine.Core
 {
@@ -24,6 +27,11 @@ namespace VendingMachine.Core
                 return price;
             }
             throw new ArgumentException("Product is invalid", nameof(product));
+        }
+
+        public ReadOnlyDictionary<Product, int> GetAll()
+        {
+            return new ReadOnlyDictionary<Product, int>(_prices);
         }
     }
 }

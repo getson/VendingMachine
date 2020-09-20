@@ -15,4 +15,5 @@ namespace VendingMachine.Queries
 
         public string Amount { get; }
     }
+   
 }
