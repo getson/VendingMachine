@@ -18,7 +18,10 @@ namespace VendingMachine.CLI.Infrastructure
             e.Cancel = true;
             EventHandler cancelKeyPress = CancelKeyPress;
             if (cancelKeyPress == null)
+            {
                 return;
+            }
+
             cancelKeyPress(this, e);
         }
 
@@ -31,7 +34,10 @@ namespace VendingMachine.CLI.Infrastructure
         public void Write(string message)
         {
             if (Silent)
+            {
                 return;
+            }
+
             Console.Write(message);
         }
 
@@ -43,28 +49,40 @@ namespace VendingMachine.CLI.Infrastructure
         public void WriteLine(string line)
         {
             if (Silent)
+            {
                 return;
+            }
+
             Console.WriteLine(line);
         }
 
         public void WriteError(Exception ex)
         {
             if (Silent)
+            {
                 return;
+            }
+
             Console.Error.WriteLine(ex.Message);
         }
 
         public void WriteError(string line)
         {
             if (Silent)
+            {
                 return;
+            }
+
             Console.Error.WriteLine(line);
         }
 
         private void Dispose(bool disposing)
         {
             if (!disposing)
+            {
                 return;
+            }
+
             try
             {
                 Console.CancelKeyPress -= new ConsoleCancelEventHandler(ConsoleCancelKeyPressHandler);

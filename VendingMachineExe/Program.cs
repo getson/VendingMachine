@@ -1,13 +1,8 @@
-﻿using MediatR;
-using MediatR.Pipeline;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Reflection;
 using VendingMachine.CLI.Infrastructure;
-using VendingMachine.CLI.Providers;
-using VendingMachine.Commands.Handlers;
-using VendingMachine.Core;
-using VendingMachine.Queries;
 
 namespace VendingMachine
 {
@@ -17,18 +12,13 @@ namespace VendingMachine
         {
             Console.WriteLine("Vending Machine Starting...");
 
-            //DI setup
-            var serviceProvider = new ServiceCollection()
-                .AddSingleton<CommandProcessor>()
-                .AddSingleton<ITerminal, Terminal>()
-                .AddSingleton<ICommandPrompt, CommandPrompt>()
-                .AddSingleton<ICommandProvider, CommandProvider>(x => new CommandProvider(x.GetRequiredService<ICommandPrompt>(), args))
-                .AddMediatR(typeof(SelectProductHandler).GetTypeInfo().Assembly, typeof(GetSelectedProductPrice).GetTypeInfo().Assembly)
-                .AddValidators()
-                .AddTransient(typeof(IRequestExceptionHandler<,>), typeof(ExceptionBehaviour<,>))
-                //.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>))
-                .AddSingleton<IVendingMachineProvider, VendingMachineProvider>()
-                .BuildServiceProvider();
+            var container = new ContainerBuilder();
+
+            container.RegisterModule(new ApplicationModule(args));
+
+            var serviceProvider = new AutofacServiceProvider(
+                container.Build()
+                );
 
             serviceProvider
                 .GetService<CommandProcessor>()

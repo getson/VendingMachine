@@ -4,6 +4,5 @@ namespace VendingMachine.Commands
 {
     public class CancelOrder : IRequest
     {
-
     }
 }

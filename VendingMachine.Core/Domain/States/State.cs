@@ -3,7 +3,7 @@ using VendingMachine.Core.Domain;
 
 namespace VendingMachine.Core
 {
-    abstract class State
+    internal abstract class State
     {
         public VMachine VendingMachine { get; set; }
         public Wallet Wallet { get; set; }
@@ -12,7 +12,6 @@ namespace VendingMachine.Core
 
         public Product SelectedProduct { get; set; }
         public List<Coin> InsertedCoins { get; set; }
-
 
         public abstract void InsertCoins(IEnumerable<Coin> coins);
 

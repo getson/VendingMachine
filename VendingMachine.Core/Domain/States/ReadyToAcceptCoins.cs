@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using VendingMachine.Core.Domain;
 
 namespace VendingMachine.Core
 {
-    class ReadyToAcceptCoins : State
+    internal class ReadyToAcceptCoins : State
     {
         public ReadyToAcceptCoins(State state)
         {
@@ -39,7 +38,6 @@ namespace VendingMachine.Core
 
         public override void ProcessOrder()
         {
-
         }
 
         public override void SelectProduct(Product product)

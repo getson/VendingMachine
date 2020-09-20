@@ -2,8 +2,7 @@
 
 namespace VendingMachine.Commands
 {
-    public class ProcessOrder: IRequest
+    public class ProcessOrder : IRequest
     {
-
     }
 }

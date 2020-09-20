@@ -3,7 +3,7 @@ using VendingMachine.Core.Domain;
 
 namespace VendingMachine.Core
 {
-     class ReadyToProcessOrder : State
+    internal class ReadyToProcessOrder : State
     {
         public ReadyToProcessOrder(State state)
         {

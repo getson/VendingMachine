@@ -6,8 +6,14 @@ namespace VendingMachine.CLI.Infrastructure
     {
         public static bool BoolValidator(string value)
         {
-            if (!string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) && !string.Equals(value, "false", StringComparison.OrdinalIgnoreCase) && !string.Equals(value, "Y", StringComparison.CurrentCultureIgnoreCase))
+            if (!string.Equals(value, "true", StringComparison.OrdinalIgnoreCase)
+                && !string.Equals(value, "false", StringComparison.OrdinalIgnoreCase)
+                && !string.Equals(value, "Y", StringComparison.CurrentCultureIgnoreCase)
+            )
+            {
                 return string.Equals(value, "N", StringComparison.CurrentCultureIgnoreCase);
+            }
+
             return true;
         }
 

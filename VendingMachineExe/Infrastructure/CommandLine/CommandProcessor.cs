@@ -16,8 +16,8 @@ namespace VendingMachine.CLI.Infrastructure
         private readonly ICommandPrompt _prompt;
         private readonly ICommandProvider _command;
 
-        const string CancelPurchaseMessage = "Do you want to cancel the purchase?";
-        const string Cancel = "cancel";
+        private const string _cancelPurchaseMessage = "Do you want to cancel the purchase?";
+        private const string _cancel = "cancel";
 
         public CommandProcessor(IMediator mediator, ITerminal terminal, ICommandPrompt prompt, ICommandProvider command)
         {
@@ -30,6 +30,7 @@ namespace VendingMachine.CLI.Infrastructure
         public void Execute()
         {
             var parseErrors = _command.ParseErrors;
+
             if ((parseErrors != null ? (parseErrors.Any() ? 1 : 0) : 0) != 0)
             {
                 var stringList = new List<string>();
@@ -40,20 +41,25 @@ namespace VendingMachine.CLI.Infrastructure
                     {
                         var current = enumerator.Current;
                         if (current is TokenError tokenError)
+                        {
                             stringList.Add(tokenError.Token);
+                        }
                         else
+                        {
                             _terminal.WriteError($"An error occurred: {current.Tag}");
+                        }
                     }
                 }
                 finally
                 {
                     if (enumerator != null)
+                    {
                         enumerator.Dispose();
+                    }
                 }
                 _terminal.WriteError($"Unrecognized command-line input arguments: '{string.Join(", ", stringList)}'.");
                 return;
             }
-
 
             while (true)
             {
@@ -72,7 +78,7 @@ namespace VendingMachine.CLI.Infrastructure
 
                     _terminal.WriteLine($"The price for '{product}' is: {result.Amount}!");
 
-                    if (_prompt.ReadBool(Cancel, CancelPurchaseMessage, false))
+                    if (_prompt.ReadBool(_cancel, _cancelPurchaseMessage, false))
                     {
                         CancelOrder();
                         break;
@@ -87,10 +93,11 @@ namespace VendingMachine.CLI.Infrastructure
                             _mediator.Send(new InsertCoins(coins));
                             break;
                         }
-                        catch (NotFullPaidException ex){
+                        catch (NotFullPaidException ex)
+                        {
                             _terminal.WriteLine($"{ex.Message}: {ex.RemainingAmount}");
 
-                            if (_prompt.ReadBool(Cancel, CancelPurchaseMessage, false))
+                            if (_prompt.ReadBool(_cancel, _cancelPurchaseMessage, false))
                             {
                                 CancelOrder();
                                 return;
@@ -98,7 +105,7 @@ namespace VendingMachine.CLI.Infrastructure
                         }
                     }
 
-                    if (_prompt.ReadBool(Cancel, CancelPurchaseMessage, false))
+                    if (_prompt.ReadBool(_cancel, _cancelPurchaseMessage, false))
                     {
                         CancelOrder();
                         break;
@@ -117,14 +124,12 @@ namespace VendingMachine.CLI.Infrastructure
                 }
             }
 
-
             void CancelOrder()
             {
                 _terminal.WriteLine("The purchase canceled!");
                 _mediator.Send(new CancelOrder());
             }
         }
-
 
         private void WriteSection(string message)
         {

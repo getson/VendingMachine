@@ -10,6 +10,7 @@ namespace VendingMachine.CLI.Infrastructure
           string argName,
           string description,
           string defaultValue,
-          Func<string, bool> validator);
+          Func<string, bool> validator
+        );
     }
 }

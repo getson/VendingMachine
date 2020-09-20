@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using VendingMachine.Core.Domain;
 
 namespace VendingMachine.Core
@@ -12,6 +11,7 @@ namespace VendingMachine.Core
         }
 
         internal State State { get; set; }
+
         public int GetAmountToBePaid()
         {
             return State.PricesProvider.GetPrice(State.SelectedProduct);

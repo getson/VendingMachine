@@ -13,9 +13,15 @@ namespace VendingMachine.CLI.Infrastructure
 
         public bool ReadBool(string argName, string description, bool defaultValue)
         {
-            string a = ReadValue(argName, description, defaultValue ? "Y" : "N", new Func<string, bool>(CommandValidators.BoolValidator));
+            string a = ReadValue(argName, description, defaultValue ? "Y" : "N",
+                new Func<string, bool>(CommandValidators.BoolValidator)
+             );
+
             if (!string.Equals(a, "true", StringComparison.OrdinalIgnoreCase))
+            {
                 return string.Equals(a, "Y", StringComparison.CurrentCultureIgnoreCase);
+            }
+
             return true;
         }
 
@@ -32,12 +38,17 @@ namespace VendingMachine.CLI.Infrastructure
                 {
                     string action;
                     if (!string.IsNullOrEmpty(defaultValue))
+                    {
                         action = $"Enter {description} (press enter for {defaultValue})";
+                    }
                     else
+                    {
                         action = $"Enter {description}";
+                    }
+
                     _terminal.Write(action + " > ");
                     input = _terminal.ReadLine()?.Trim() ?? string.Empty;
-                    
+
                     if (string.IsNullOrEmpty(input) && !string.IsNullOrEmpty(defaultValue))
                     {
                         return defaultValue;
@@ -49,7 +60,9 @@ namespace VendingMachine.CLI.Infrastructure
                     _terminal.WriteLine($"Enter a valid value for {description}.");
                 }
                 else
+                {
                     break;
+                }
             }
             return input;
         }

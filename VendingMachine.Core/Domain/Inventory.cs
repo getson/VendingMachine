@@ -17,6 +17,7 @@ namespace VendingMachine.Core
 
             _stock[product] = actualPortions + portions;
         }
+
         public int GetStock(Product product)
         {
             _stock.TryGetValue(product, out var stock);

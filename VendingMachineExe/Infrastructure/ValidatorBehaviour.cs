@@ -10,11 +10,11 @@ namespace VendingMachine.CLI.Infrastructure
     public class ValidatorBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
     {
-        private readonly IValidator<TRequest> _validator;
+        private readonly IValidator<TRequest>[] _validators;
 
-        public ValidatorBehavior(IValidator<TRequest> validator)
+        public ValidatorBehavior(IValidator<TRequest>[] validators)
         {
-            _validator = validator;
+            _validators = validators;
         }
 
         public async Task<TResponse> Handle(
@@ -23,10 +23,11 @@ namespace VendingMachine.CLI.Infrastructure
             RequestHandlerDelegate<TResponse> next
         )
         {
-            var failures = _validator.Validate(request)
-                .Errors
+            var failures = _validators
+                .Select(v => v.Validate(request))
+                .SelectMany(result => result.Errors)
                 .Where(error => error != null)
-                .Select(error => error.ErrorMessage)
+                .Select(x => x.ErrorMessage)
                 .ToList();
 
             if (failures.Any())
@@ -37,7 +38,6 @@ namespace VendingMachine.CLI.Infrastructure
             return await next();
         }
     }
-
 
     public class VendingMachineValiationException : Exception
     {
