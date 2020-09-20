@@ -3,12 +3,11 @@ using VendingMachine.Core.Domain;
 
 namespace VendingMachine.Core
 {
-    internal class ReadyToSellProduct : State
+    public class ReadyToSellProduct : State
     {
         public ReadyToSellProduct(State state)
             : this(state.Wallet, state.Inventory, state.PricesProvider, state.VendingMachine)
         {
-
         }
 
         public ReadyToSellProduct(

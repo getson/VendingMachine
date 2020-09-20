@@ -4,7 +4,7 @@ using VendingMachine.Core.Domain;
 
 namespace VendingMachine.Core
 {
-    internal class ReadyToAcceptCoins : State
+    public class ReadyToAcceptCoins : State
     {
         public ReadyToAcceptCoins(State state)
         {
