@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using VendingMachine.Core;
 using VendingMachine.Core.Domain;
-using VendingMachine.Core;
 
-namespace VendingMachine.Exe.Providers
+namespace VendingMachine.CLI.Providers
 {
     public class VendingMachineProvider : IVendingMachineProvider
     {

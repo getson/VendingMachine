@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace VendingMachine.Exe.Infrastructure
+namespace VendingMachine.CLI.Infrastructure
 {
     public class ValidatorBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System;
 
 namespace VendingMachine.Queries
 {
@@ -11,6 +10,7 @@ namespace VendingMachine.Queries
     {
         public GetSelectedProductPriceResult(string amount)
         {
+            Amount = amount;
         }
 
         public string Amount { get; }

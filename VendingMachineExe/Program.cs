@@ -3,11 +3,10 @@ using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
-using VendingMachine.Core;
-using VendingMachine.Exe.Infrastructure;
-using VendingMachine.Exe.Providers;
-using VendingMachine.Commands;
+using VendingMachine.CLI.Infrastructure;
+using VendingMachine.CLI.Providers;
 using VendingMachine.Commands.Handlers;
+using VendingMachine.Core;
 using VendingMachine.Queries;
 
 namespace VendingMachine
@@ -21,22 +20,23 @@ namespace VendingMachine
             //DI setup
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<CommandProcessor>()
-                .AddMediatR(typeof(SelectProductHandler).GetTypeInfo().Assembly)
+                .AddSingleton<ITerminal, Terminal>()
+                .AddSingleton<ICommandPrompt, CommandPrompt>()
+                .AddSingleton<ICommandProvider, CommandProvider>(x => new CommandProvider(x.GetRequiredService<ICommandPrompt>(), args))
+                .AddMediatR(typeof(SelectProductHandler).GetTypeInfo().Assembly, typeof(GetSelectedProductPrice).GetTypeInfo().Assembly)
                 .AddValidators()
                 .AddTransient(typeof(IRequestExceptionHandler<,>), typeof(ExceptionBehaviour<,>))
-                .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>))
+                //.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>))
                 .AddSingleton<IVendingMachineProvider, VendingMachineProvider>()
                 .BuildServiceProvider();
 
-            var commandProcessor = serviceProvider.GetService<CommandProcessor>();
+            serviceProvider
+                .GetService<CommandProcessor>()
+                .Execute();
 
-            var response = commandProcessor.Execute(new SelectProduct("Espresso"));
-            Console.Write(response);
-
-            var result = commandProcessor.Execute(new GetSelectedProductPrice());
-            Console.WriteLine(result);
-
-            Console.Read();
+            serviceProvider
+                .GetService<ITerminal>()
+                .ReadLine();
         }
     }
 }

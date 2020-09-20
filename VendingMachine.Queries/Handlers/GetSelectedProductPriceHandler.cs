@@ -1,7 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using VendingMachine.Core;
 
 namespace VendingMachine.Queries.Handlers
@@ -20,10 +17,10 @@ namespace VendingMachine.Queries.Handlers
         {
             var machine = _vendingMachineProvider.GetVendingMachine();
 
-            var amount = machine.GetAmountToBePaid() / 100;
+            var amount = (decimal)machine.GetAmountToBePaid() / 100;
 
             return new GetSelectedProductPriceResult(
-              string.Format("€{0:N2} Euro", amount)
+              string.Format("{0:N2} Euro", amount)
                 );
         }
     }
