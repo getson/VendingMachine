@@ -9,12 +9,13 @@ namespace VendingMachine.Commands.Validators
     {
         public InsertCoinsValidator()
         {
-            var coinValues = Enum.GetValues(typeof(CoinType))
+            var coinValues = Enum.GetValues(typeof(Coin))
                             .Cast<int>()
                             .ToArray();
 
             RuleForEach(x => x.Coins)
-                .Must(c => coinValues.Contains(c));
+                .Must(c => coinValues.Contains(c))
+                .WithMessage("Your coins are invalid!");
         }
     }
 }

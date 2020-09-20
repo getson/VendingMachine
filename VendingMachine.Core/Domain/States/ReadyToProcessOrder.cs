@@ -23,11 +23,11 @@ namespace VendingMachine.Core
             VendingMachine.State = new ReadyToAcceptCoins(this);
         }
 
-        public override void InsertCoins(IEnumerable<CoinType> coins)
+        public override void InsertCoins(IEnumerable<Coin> coins)
         {
         }
 
-        public override void ProcessOrder(IList<Coin> coinsToReturn)
+        public override void ProcessOrder(IList<CoinWithQuantity> coinsToReturn)
         {
             foreach (var coin in InsertedCoins)
             {
@@ -35,11 +35,11 @@ namespace VendingMachine.Core
             }
             foreach (var coin in coinsToReturn)
             {
-                Wallet.Deduct((CoinType)coin.Denomination, coin.Count);
+                Wallet.Deduct((Coin)coin.Denomination, coin.Quantity);
             }
             Inventory.Deduct(SelectedProduct);
-
-            VendingMachine.State = new ReadyToAcceptCoins(this);
+            
+            VendingMachine.State = new ReadyToSellProduct(this);
         }
         public override void SelectProduct(Product product)
         {

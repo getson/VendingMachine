@@ -22,9 +22,9 @@ namespace VendingMachine.Core
             VendingMachine.State = new ReadyToSellProduct(this);
         }
 
-        public override void InsertCoins(IEnumerable<CoinType> coins)
+        public override void InsertCoins(IEnumerable<Coin> coins)
         {
-            InsertedCoins = coins.ToList();
+            InsertedCoins.AddRange(coins);
 
             var productCost = PricesProvider.GetPrice(SelectedProduct);
             var diff = productCost - InsertedCoins.Sum(x => (int)x);
@@ -36,7 +36,7 @@ namespace VendingMachine.Core
             VendingMachine.State = new ReadyToProcessOrder(this);
         }
 
-        public override void ProcessOrder(IList<Coin> coinsToReturn)
+        public override void ProcessOrder(IList<CoinWithQuantity> coinsToReturn)
         {
         }
 

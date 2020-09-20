@@ -29,12 +29,12 @@ namespace VendingMachine.CLI.Providers
                     });
 
                 var wallet = new Wallet(
-                    new Dictionary<CoinType, int>
+                    new Dictionary<Coin, int>
                     {
-                        {CoinType.TenCent,100 },
-                        {CoinType.TwentyCent,100 },
-                        {CoinType.HalfEuro,100 },
-                        {CoinType.OneEuro,100 }
+                        {Coin.TenCent,100 },
+                        {Coin.TwentyCent,100 },
+                        {Coin.HalfEuro,100 },
+                        {Coin.OneEuro,100 }
                     });
                 var pricesProvider = new PricesProvider(
                     new Dictionary<Product, int>()

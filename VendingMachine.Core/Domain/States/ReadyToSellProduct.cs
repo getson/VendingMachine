@@ -6,14 +6,9 @@ namespace VendingMachine.Core
     internal class ReadyToSellProduct : State
     {
         public ReadyToSellProduct(State state)
+            : this(state.Wallet, state.Inventory, state.PricesProvider, state.VendingMachine)
         {
-            VendingMachine = state.VendingMachine;
-            InsertedCoins = state.InsertedCoins;
-            SelectedProduct = state.SelectedProduct;
 
-            Wallet = state.Wallet;
-            Inventory = state.Inventory;
-            PricesProvider = state.PricesProvider;
         }
 
         public ReadyToSellProduct(
@@ -21,6 +16,8 @@ namespace VendingMachine.Core
             PricesProvider pricesProvider, VMachine machine
          )
         {
+            InsertedCoins = new List<Coin>();
+
             Wallet = wallet;
             Inventory = inventory;
             PricesProvider = pricesProvider;
@@ -32,11 +29,11 @@ namespace VendingMachine.Core
             // nothing to cancel
         }
 
-        public override void InsertCoins(IEnumerable<CoinType> coins)
+        public override void InsertCoins(IEnumerable<Coin> coins)
         {
         }
 
-        public override void ProcessOrder(IList<Coin> coinsToReturn)
+        public override void ProcessOrder(IList<CoinWithQuantity> coinsToReturn)
         {
         }
 

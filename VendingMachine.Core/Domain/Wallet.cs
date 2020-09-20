@@ -8,36 +8,36 @@ namespace VendingMachine.Core
 {
     public class Wallet
     {
-        private readonly Dictionary<CoinType, int> _grouppedCoins;
+        private readonly Dictionary<Coin, int> _grouppedCoins;
 
-        public Wallet(Dictionary<CoinType, int> coins)
+        public Wallet(Dictionary<Coin, int> coins)
         {
             _grouppedCoins = coins;
         }
 
-        public void Add(CoinType coin, int quantity)
+        public void Add(Coin coin, int quantity)
         {
             _grouppedCoins.TryGetValue(coin, out var actualQuantity);
 
             _grouppedCoins[coin] = actualQuantity + quantity;
         }
 
-        public void Deduct(CoinType coin, int quantity = 1)
+        public void Deduct(Coin coin, int quantity = 1)
         {
             _grouppedCoins.TryGetValue(coin, out var actualQuantity);
 
             _grouppedCoins[coin] = actualQuantity - quantity;
         }
 
-        public int GetQuantity(CoinType coin)
+        public int GetQuantity(Coin coin)
         {
             _grouppedCoins.TryGetValue(coin, out var quantity);
 
             return quantity;
         }
-        public ReadOnlyDictionary<CoinType, int> GetAll()
+        public ReadOnlyDictionary<Coin, int> GetAll()
         {
-            return new ReadOnlyDictionary<CoinType, int>(
+            return new ReadOnlyDictionary<Coin, int>(
                 _grouppedCoins
             );
         }

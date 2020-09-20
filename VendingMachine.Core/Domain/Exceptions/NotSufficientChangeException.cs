@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace VendingMachine.Core.Domain
 {
@@ -7,6 +8,7 @@ namespace VendingMachine.Core.Domain
         public NotSufficientChangeException(string message)
             : base(message)
         {
+
         }
     }
 }

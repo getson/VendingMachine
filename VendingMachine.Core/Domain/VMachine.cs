@@ -27,7 +27,7 @@ namespace VendingMachine.Core
             return State.PricesProvider.GetPrice(State.SelectedProduct);
         }
 
-        public void InsertCoins(IEnumerable<CoinType> coins)
+        public void InsertCoins(IEnumerable<Coin> coins)
         {
             State.InsertCoins(coins);
         }
@@ -37,16 +37,51 @@ namespace VendingMachine.Core
             State.SelectProduct(product);
         }
 
-        public void CancelOrder()
+        public IReadOnlyCollection<Coin> CancelOrder()
         {
+            var insertedCoins = State.InsertedCoins;
+
             State.CancelOrder();
+
+            return insertedCoins.AsReadOnly();
         }
 
-        public void GetMoneyBack()
+        public Product GetSelectedProduct()
         {
+            return State.SelectedProduct;
+        }
+        public IReadOnlyCollection<Coin> ProcessOrder(bool ignoreChange)
+        {
+
+            var coinWithQuantitiesChange = GetChange();
+
+            if (!ignoreChange && coinWithQuantitiesChange == null)
+            {
+                throw new NotSufficientChangeException(
+                    "Not able to return change"
+                );
+            }
+
+            State.ProcessOrder(coinWithQuantitiesChange);
+
+            var coinsToReturn = new List<Coin>();
+
+            foreach (var coin in coinWithQuantitiesChange)
+            {
+                coinsToReturn.AddRange(
+                    Enumerable.Repeat((Coin)coin.Denomination, coin.Quantity)
+                );
+            }
+
+            return coinsToReturn.AsReadOnly();
         }
 
-        public void ProcessOrder()
+        public IReadOnlyDictionary<Product, int> GetProductsWithPrices()
+        {
+            return State.PricesProvider.GetAll();
+        }
+       
+        private IList<CoinWithQuantity> GetChange()
         {
             var insertedAmount = State.InsertedCoins.Sum(x => (int)x);
             var change = insertedAmount - State.PricesProvider.GetPrice(State.SelectedProduct);
@@ -56,7 +91,7 @@ namespace VendingMachine.Core
                 .ToDictionary(grp => grp.Key, v => v.Count());
 
 
-            var coinsWithQuantity = new Dictionary<CoinType, int>(
+            var coinsWithQuantity = new Dictionary<Coin, int>(
                     State.Wallet.GetAll()
                 );
 
@@ -69,20 +104,11 @@ namespace VendingMachine.Core
 
 
             var coinsToReturn = _changeCalculator.CalculateMinimum(
-                coinsWithQuantity.Select(x => new Coin((int)x.Key, x.Value))
-                .OrderByDescending(x=>x.Denomination).ToList(),
+                coinsWithQuantity.Select(x => new CoinWithQuantity(x.Key, x.Value))
+                .OrderByDescending(x => x.Denomination).ToList(),
                 change
             );
-            if (coinsToReturn == null)
-            {
-                throw new NotSufficientChangeException("Not able to return change! Please, Insert exact change!");
-            }
-            State.ProcessOrder(coinsToReturn);
-        }
-
-        public ReadOnlyDictionary<Product, int> GetProductsWithPrices()
-        {
-            return State.PricesProvider.GetAll();
+            return coinsToReturn;
         }
     }
 }

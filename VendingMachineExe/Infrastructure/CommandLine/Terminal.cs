@@ -1,4 +1,5 @@
 ﻿using System;
+using VendingMachine.Core;
 
 namespace VendingMachine.CLI.Infrastructure
 {

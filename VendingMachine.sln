@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachine.Commands", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachine.Queries", "VendingMachine.Queries\VendingMachine.Queries.csproj", "{30D73DBD-5F08-4CF0-85B7-0D072C66E7E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendinMachine.EventHandlers", "VendinMachine.EventHandlers\VendinMachine.EventHandlers.csproj", "{B1588F13-B5B0-437B-801A-FB6F3E2AA6DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingMachine.Events", "VendingMachine.Events\VendingMachine.Events.csproj", "{64E4AC36-1FA6-43AC-9226-B8B212B6C8AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{30D73DBD-5F08-4CF0-85B7-0D072C66E7E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30D73DBD-5F08-4CF0-85B7-0D072C66E7E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30D73DBD-5F08-4CF0-85B7-0D072C66E7E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1588F13-B5B0-437B-801A-FB6F3E2AA6DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1588F13-B5B0-437B-801A-FB6F3E2AA6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1588F13-B5B0-437B-801A-FB6F3E2AA6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1588F13-B5B0-437B-801A-FB6F3E2AA6DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64E4AC36-1FA6-43AC-9226-B8B212B6C8AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64E4AC36-1FA6-43AC-9226-B8B212B6C8AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64E4AC36-1FA6-43AC-9226-B8B212B6C8AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64E4AC36-1FA6-43AC-9226-B8B212B6C8AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

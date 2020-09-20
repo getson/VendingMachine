@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VendingMachine.CLI.Infrastructure
+namespace VendingMachine.Core
 {
     public interface ITerminal : IDisposable
     {

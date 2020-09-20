@@ -11,6 +11,6 @@ namespace VendingMachine.Core.Domain.Services
         /// <param name="coins"></param>
         /// <param name="change"></param>
         /// <returns></returns>
-        IList<Coin> CalculateMinimum(IList<Coin> coins, int change);
+        IList<CoinWithQuantity> CalculateMinimum(IList<CoinWithQuantity> coins, int change);
     }
 }

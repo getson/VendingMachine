@@ -6,24 +6,24 @@ namespace VendingMachine.Core.Domain.Services
 {
     public class ChangeCalculator : IChangeCalculator
     {
-        private IList<Coin> Calculate(IList<Coin> coins, int change, int start = 0)
+        private IList<CoinWithQuantity> Calculate(IList<CoinWithQuantity> coins, int change, int start = 0)
         {
             for (int i = start; i < coins.Count; i++)
             {
-                Coin coin = coins[i];
+                CoinWithQuantity coin = coins[i];
                 // no point calculating anything if no coins exist or the 
                 // current denomination is too high
-                if (coin.Count > 0 && coin.Denomination <= change)
+                if (coin.Quantity > 0 && coin.Denomination <= change)
                 {
                     int remainder = change % coin.Denomination;
                     if (remainder < change)
                     {
-                        int howMany = Math.Min(coin.Count,
+                        int howMany = Math.Min(coin.Quantity,
                             (change - remainder) / coin.Denomination);
 
-                        List<Coin> matches = new List<Coin>
+                        List<CoinWithQuantity> matches = new List<CoinWithQuantity>
                         {
-                            new Coin(coin.Denomination, howMany)
+                            new CoinWithQuantity((Coin)coin.Denomination, howMany)
                         };
 
                         int amount = howMany * coin.Denomination;
@@ -33,7 +33,7 @@ namespace VendingMachine.Core.Domain.Services
                             return matches;
                         }
 
-                        IList<Coin> subCalc = Calculate(coins, changeLeft, i + 1);
+                        IList<CoinWithQuantity> subCalc = Calculate(coins, changeLeft, i + 1);
                         if (subCalc != null)
                         {
                             matches.AddRange(subCalc);
@@ -44,19 +44,19 @@ namespace VendingMachine.Core.Domain.Services
             }
             return null;
         }
-        public IList<Coin> CalculateMinimum(IList<Coin> coins, int change)
+        public IList<CoinWithQuantity> CalculateMinimum(IList<CoinWithQuantity> coins, int change)
         {
             // used to store the minimum matches
-            IList<Coin> minimalMatch = null;
+            IList<CoinWithQuantity> minimalMatch = null;
             int minimalCount = -1;
 
-            IList<Coin> subset = coins;
+            IList<CoinWithQuantity> subset = coins;
             for (int i = 0; i < coins.Count; i++)
             {
-                IList<Coin> matches = Calculate(subset, change);
+                IList<CoinWithQuantity> matches = Calculate(subset, change);
                 if (matches != null)
                 {
-                    int matchCount = matches.Sum(c => c.Count);
+                    int matchCount = matches.Sum(c => c.Quantity);
                     if (minimalMatch == null || matchCount < minimalCount)
                     {
                         minimalMatch = matches;

@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using VendingMachine.CLI.Infrastructure;
+using VendingMachine.Core;
 
 namespace VendingMachine
 {
@@ -22,7 +23,9 @@ namespace VendingMachine
 
             serviceProvider
                 .GetService<CommandProcessor>()
-                .Execute();
+                .Execute()
+                .GetAwaiter()
+                .GetResult();
 
             serviceProvider
                 .GetService<ITerminal>()

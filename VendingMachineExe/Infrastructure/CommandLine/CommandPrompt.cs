@@ -1,4 +1,5 @@
 ﻿using System;
+using VendingMachine.Core;
 
 namespace VendingMachine.CLI.Infrastructure
 {
@@ -47,6 +48,7 @@ namespace VendingMachine.CLI.Infrastructure
                     }
 
                     _terminal.Write(action + " > ");
+
                     input = _terminal.ReadLine()?.Trim() ?? string.Empty;
 
                     if (string.IsNullOrEmpty(input) && !string.IsNullOrEmpty(defaultValue))

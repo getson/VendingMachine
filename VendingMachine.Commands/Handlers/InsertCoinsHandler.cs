@@ -1,11 +1,13 @@
 ﻿using MediatR;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using VendingMachine.Core;
 using VendingMachine.Core.Domain;
 
 namespace VendingMachine.Commands.Handlers
 {
-    public class InsertCoinsHandler : RequestHandler<InsertCoins>
+    public class InsertCoinsHandler : IRequestHandler<InsertCoins>
     {
         private readonly IVendingMachineProvider _vendingMachineProvider;
 
@@ -14,15 +16,15 @@ namespace VendingMachine.Commands.Handlers
             _vendingMachineProvider = vendingMachineProvider;
         }
 
-        protected override void Handle(InsertCoins request)
+        public Task<Unit> Handle(InsertCoins request, CancellationToken cancellationToken)
         {
             var machine = _vendingMachineProvider.GetVendingMachine();
 
-            var coins = request.Coins.Select(c => (CoinType)c);
+            var coins = request.Coins.Select(c => (Coin)c);
 
             machine.InsertCoins(coins);
 
-            //TODO return message or publish event
+            return Task.FromResult(Unit.Value);
         }
     }
 }

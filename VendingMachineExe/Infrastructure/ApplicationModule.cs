@@ -7,6 +7,7 @@ using VendingMachine.Commands;
 using VendingMachine.Core;
 using VendingMachine.Core.Domain.Services;
 using VendingMachine.Queries;
+using VendinMachine.EventHandlers;
 
 namespace VendingMachine.CLI.Infrastructure
 {
@@ -45,8 +46,8 @@ namespace VendingMachine.CLI.Infrastructure
                 .As<ICommandPrompt>()
                 .SingleInstance();
 
-            builder.Register(x => new CommandProvider(x.Resolve<ICommandPrompt>(), _args))
-                .As<ICommandProvider>()
+            builder.Register(x => new CommandParser(x.Resolve<ICommandPrompt>(), _args))
+                .As<ICommandParser>()
                 .SingleInstance();
 
             builder.RegisterType<CommandProcessor>()
@@ -64,6 +65,9 @@ namespace VendingMachine.CLI.Infrastructure
 
             builder.RegisterAssemblyTypes(typeof(GetSelectedProductPrice).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(ShowProductPriceWhenProductIsSelectedEventHandler).GetTypeInfo().Assembly)
+             .AsClosedTypesOf(typeof(INotificationHandler<>));
 
             // Register the Command's Validators (Validators based on FluentValidation library)
             builder

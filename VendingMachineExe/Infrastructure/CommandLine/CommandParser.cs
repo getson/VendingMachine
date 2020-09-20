@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace VendingMachine.CLI.Infrastructure
 {
-    public sealed class CommandProvider : ICommandProvider
+    public sealed class CommandParser : ICommandParser
     {
         private readonly IEnumerable<string> _verbCommands = new string[1] { "buy" };
 
@@ -19,7 +19,7 @@ namespace VendingMachine.CLI.Infrastructure
 
         public IEnumerable<Error> ParseErrors { get; set; }
 
-        public CommandProvider(ICommandPrompt commandPrompt, string[] args)
+        public CommandParser(ICommandPrompt commandPrompt, string[] args)
         {
             _commandPrompt = commandPrompt;
 
@@ -33,7 +33,10 @@ namespace VendingMachine.CLI.Infrastructure
                 return BuyProductCommand.Product;
             }
 
-            return _commandPrompt.ReadValue("product", "Product Name", string.Empty,
+            return _commandPrompt.ReadValue(
+                "product",
+                "Product Name",
+                string.Empty,
                 new Func<string, bool>(CommandValidators.NonEmptyValidator)
             );
         }
@@ -93,7 +96,9 @@ namespace VendingMachine.CLI.Infrastructure
                 return new string[1] { "buy" };
             }
 
-            if (_verbCommands.Any(str => str.Contains(args[0])) || !args[0].StartsWith("--"))
+            if (_verbCommands.Any(str => str.Contains(args[0])) 
+                || !args[0].StartsWith("--")
+                )
             {
                 return args;
             }
