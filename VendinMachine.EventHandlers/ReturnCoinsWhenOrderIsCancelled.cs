@@ -21,8 +21,7 @@ namespace VendinMachine.EventHandlers
             _terminal.WriteLine();
 
             _terminal.WriteLine("Order Cancelled!");
-            _terminal.WriteLine($"Please take your coins: Coins: " +
-                $"{string.Join(" ", notification.InsertedCoins.Select(c => (int)c))}"
+            _terminal.WriteLine($"Please take back your coins: {string.Join(" ", notification.InsertedCoins.Select(c => (int)c))}"
              );
             _terminal.WriteLine();
 

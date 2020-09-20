@@ -34,8 +34,7 @@ namespace VendingMachine.CLI.Infrastructure
             }
 
             return _commandPrompt.ReadValue(
-                "product",
-                "Product Name",
+                "Insert Product Name",
                 string.Empty,
                 new Func<string, bool>(CommandValidators.NonEmptyValidator)
             );
@@ -51,8 +50,7 @@ namespace VendingMachine.CLI.Infrastructure
             }
 
             var coinsInput = _commandPrompt.ReadValue(
-                "coins",
-                "Coins (Insert coins space separated by! Ex: 10 20 50 100)",
+                "Insert Coins (separated with space, Ex: 10 20 50 100)",
                 string.Empty,
                 new Func<string, bool>(CommandValidators.NonEmptyValidator)
             );

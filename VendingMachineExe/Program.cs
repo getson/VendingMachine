@@ -3,7 +3,6 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using VendingMachine.CLI.Infrastructure;
-using VendingMachine.Core;
 
 namespace VendingMachine
 {
@@ -11,8 +10,6 @@ namespace VendingMachine
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Vending Machine Starting...");
-
             var container = new ContainerBuilder();
 
             container.RegisterModule(new ApplicationModule(args));
@@ -27,9 +24,7 @@ namespace VendingMachine
                 .GetAwaiter()
                 .GetResult();
 
-            serviceProvider
-                .GetService<ITerminal>()
-                .ReadLine();
+            Console.ReadKey();
         }
     }
 }

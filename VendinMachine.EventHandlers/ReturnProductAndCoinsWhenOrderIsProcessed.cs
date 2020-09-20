@@ -20,6 +20,8 @@ namespace VendinMachine.EventHandlers
         public Task Handle(OrderProcessed notification, CancellationToken cancellationToken)
         {
             _terminal.WriteLine();
+            _terminal.WriteLine("Thank you!");
+            _terminal.WriteLine();
 
             _terminal.WriteLine("Please take the product and change!");
             _terminal.WriteLine($"Product: {notification.Product}");
