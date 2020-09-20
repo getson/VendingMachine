@@ -18,9 +18,9 @@ namespace VendingMachine.CLI.Infrastructure
         private readonly ICommandPrompt _prompt;
         private readonly ICommandParser _command;
 
-        private const string _newPurchaseMessage = "Do you want to purchase another item [y/n]?";
-        private const string _cancelPurchaseMessage = "Do you want to cancel the purchase [y/n]?";
-        private const string _cancelTransactionMessage = "Do you want to cancel the transaction [y/n]?";
+        private const string _newPurchaseMessage = "Do you want to purchase another item [Y/N]?";
+        private const string _cancelPurchaseMessage = "Do you want to cancel the purchase [Y/N]?";
+        private const string _cancelTransactionMessage = "Do you want to cancel the transaction [Y/N]?";
         private const string _new = "new";
         private const string _cancel = "cancel";
 
@@ -41,7 +41,7 @@ namespace VendingMachine.CLI.Infrastructure
         {
             var parseErrors = _command.ParseErrors;
 
-            if ((parseErrors != null ? (parseErrors.Any() ? 1 : 0) : 0) != 0)
+            if (parseErrors?.Any() ?? false)
             {
                 var stringList = new List<string>();
                 var enumerator = _command.ParseErrors.GetEnumerator();
@@ -111,12 +111,6 @@ namespace VendingMachine.CLI.Infrastructure
                     var product = _command.GetProduct();
 
                     await _mediator.Send(new SelectProduct(product));
-
-                    if (_prompt.ReadBool(_cancel, _cancelPurchaseMessage, false))
-                    {
-                        await CancelOrder();
-                        break;
-                    }
 
                     var coins = _command.GetCoins();
                     var firstTransaction = true;

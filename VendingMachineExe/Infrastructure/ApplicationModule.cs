@@ -46,7 +46,8 @@ namespace VendingMachine.CLI.Infrastructure
                 .As<ICommandPrompt>()
                 .SingleInstance();
 
-            builder.Register(x => new CommandParser(x.Resolve<ICommandPrompt>(), _args))
+            builder.RegisterType<CommandParser>()
+                .WithParameter(new TypedParameter(typeof(string[]), _args))
                 .As<ICommandParser>()
                 .SingleInstance();
 
