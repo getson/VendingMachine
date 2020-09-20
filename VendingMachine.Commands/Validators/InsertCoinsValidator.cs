@@ -9,7 +9,7 @@ namespace VendingMachine.Commands.Validators
     {
         public InsertCoinsValidator()
         {
-            var coinValues = Enum.GetValues(typeof(Coin))
+            var coinValues = Enum.GetValues(typeof(CoinType))
                             .Cast<int>()
                             .ToArray();
 

@@ -32,11 +32,11 @@ namespace VendingMachine.Core
             // nothing to cancel
         }
 
-        public override void InsertCoins(IEnumerable<Coin> coins)
+        public override void InsertCoins(IEnumerable<CoinType> coins)
         {
         }
 
-        public override void ProcessOrder()
+        public override void ProcessOrder(IList<Coin> coinsToReturn)
         {
         }
 

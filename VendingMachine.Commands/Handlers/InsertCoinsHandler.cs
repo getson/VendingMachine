@@ -18,7 +18,7 @@ namespace VendingMachine.Commands.Handlers
         {
             var machine = _vendingMachineProvider.GetVendingMachine();
 
-            var coins = request.Coins.Select(c => (Coin)c);
+            var coins = request.Coins.Select(c => (CoinType)c);
 
             machine.InsertCoins(coins);
 

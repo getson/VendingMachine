@@ -1,12 +1,19 @@
 ﻿using System.Collections.Generic;
 using VendingMachine.Core;
 using VendingMachine.Core.Domain;
+using VendingMachine.Core.Domain.Services;
 
 namespace VendingMachine.CLI.Providers
 {
     public class VendingMachineProvider : IVendingMachineProvider
     {
+        private readonly IChangeCalculator _changeCalculator;
         private VMachine _vendingMachine;
+
+        public VendingMachineProvider(IChangeCalculator changeCalculator)
+        {
+            _changeCalculator = changeCalculator;
+        }
 
         public VMachine GetVendingMachine()
         {
@@ -22,12 +29,12 @@ namespace VendingMachine.CLI.Providers
                     });
 
                 var wallet = new Wallet(
-                    new Dictionary<Coin, int>
+                    new Dictionary<CoinType, int>
                     {
-                        {Coin.TenCent,100 },
-                        {Coin.TwentyCent,100 },
-                        {Coin.HalfEuro,100 },
-                        {Coin.OneEuro,100 }
+                        {CoinType.TenCent,100 },
+                        {CoinType.TwentyCent,100 },
+                        {CoinType.HalfEuro,100 },
+                        {CoinType.OneEuro,100 }
                     });
                 var pricesProvider = new PricesProvider(
                     new Dictionary<Product, int>()
@@ -38,7 +45,10 @@ namespace VendingMachine.CLI.Providers
                         {Product.ChickenSoup, 180 }
                     });
 
-                _vendingMachine = new VMachine(wallet, inventory, pricesProvider);
+                _vendingMachine = new VMachine(
+                    wallet, inventory, pricesProvider,
+                    _changeCalculator
+                );
             }
 
             return _vendingMachine;

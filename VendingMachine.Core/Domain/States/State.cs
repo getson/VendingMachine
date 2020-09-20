@@ -11,13 +11,13 @@ namespace VendingMachine.Core
         public PricesProvider PricesProvider { get; set; }
 
         public Product SelectedProduct { get; set; }
-        public List<Coin> InsertedCoins { get; set; }
+        public List<CoinType> InsertedCoins { get; set; }
 
-        public abstract void InsertCoins(IEnumerable<Coin> coins);
+        public abstract void InsertCoins(IEnumerable<CoinType> coins);
 
         public abstract void SelectProduct(Product product);
 
-        public abstract void ProcessOrder();
+        public abstract void ProcessOrder(IList<Coin> coinsToReturn);
 
         public abstract void CancelOrder();
     }

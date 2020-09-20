@@ -13,6 +13,7 @@ namespace VendingMachine.Queries
         public GetProductItemResult(string productName, string price)
         {
             ProductName = productName;
+
             Price = price;
         }
 

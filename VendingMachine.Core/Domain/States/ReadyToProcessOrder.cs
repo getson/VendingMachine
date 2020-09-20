@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using VendingMachine.Core.Domain;
 
 namespace VendingMachine.Core
@@ -21,18 +23,27 @@ namespace VendingMachine.Core
             VendingMachine.State = new ReadyToAcceptCoins(this);
         }
 
-        public override void InsertCoins(IEnumerable<Coin> coins)
+        public override void InsertCoins(IEnumerable<CoinType> coins)
         {
         }
 
-        public override void ProcessOrder()
+        public override void ProcessOrder(IList<Coin> coinsToReturn)
         {
-            //TODO do the calculation
+            foreach (var coin in InsertedCoins)
+            {
+                Wallet.Add(coin, 1);
+            }
+            foreach (var coin in coinsToReturn)
+            {
+                Wallet.Deduct((CoinType)coin.Denomination, coin.Count);
+            }
+            Inventory.Deduct(SelectedProduct);
+
             VendingMachine.State = new ReadyToAcceptCoins(this);
         }
-
         public override void SelectProduct(Product product)
         {
         }
+
     }
 }

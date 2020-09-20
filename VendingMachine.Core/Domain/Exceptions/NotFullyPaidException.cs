@@ -2,9 +2,9 @@
 
 namespace VendingMachine.Core.Domain
 {
-    public class NotFullPaidException : Exception
+    public class NotFullyPaidException : Exception
     {
-        public NotFullPaidException(string message, int remainingAmount)
+        public NotFullyPaidException(string message, int remainingAmount)
             : base(message)
         {
             RemainingAmount = remainingAmount;

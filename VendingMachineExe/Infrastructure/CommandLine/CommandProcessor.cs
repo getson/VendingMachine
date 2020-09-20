@@ -97,7 +97,7 @@ namespace VendingMachine.CLI.Infrastructure
                                 .GetResult();
                             break;
                         }
-                        catch (NotFullPaidException ex)
+                        catch (NotFullyPaidException ex)
                         {
                             _terminal.WriteLine($"{ex.Message}: {ex.RemainingAmount}");
 

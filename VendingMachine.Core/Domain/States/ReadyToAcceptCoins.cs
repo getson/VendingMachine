@@ -22,7 +22,7 @@ namespace VendingMachine.Core
             VendingMachine.State = new ReadyToSellProduct(this);
         }
 
-        public override void InsertCoins(IEnumerable<Coin> coins)
+        public override void InsertCoins(IEnumerable<CoinType> coins)
         {
             InsertedCoins = coins.ToList();
 
@@ -31,12 +31,12 @@ namespace VendingMachine.Core
 
             if (diff > 0)
             {
-                throw new NotFullPaidException("The selected product is not fully paid, Please insert the remaining amount!", diff);
+                throw new NotFullyPaidException("The selected product is not fully paid, Please insert the remaining amount!", diff);
             }
             VendingMachine.State = new ReadyToProcessOrder(this);
         }
 
-        public override void ProcessOrder()
+        public override void ProcessOrder(IList<Coin> coinsToReturn)
         {
         }
 
