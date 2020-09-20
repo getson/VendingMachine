@@ -11,13 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachine.Commands", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachine.Queries", "VendingMachine.Queries\VendingMachine.Queries.csproj", "{30D73DBD-5F08-4CF0-85B7-0D072C66E7E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendinMachine.EventHandlers", "VendinMachine.EventHandlers\VendinMachine.EventHandlers.csproj", "{B1588F13-B5B0-437B-801A-FB6F3E2AA6DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachine.EventHandlers", "VendingMachine.EventHandlers\VendingMachine.EventHandlers.csproj", "{B1588F13-B5B0-437B-801A-FB6F3E2AA6DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingMachine.Events", "VendingMachine.Events\VendingMachine.Events.csproj", "{64E4AC36-1FA6-43AC-9226-B8B212B6C8AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachine.Events", "VendingMachine.Events\VendingMachine.Events.csproj", "{64E4AC36-1FA6-43AC-9226-B8B212B6C8AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FA605D68-9FBC-45F4-A560-3E92C5A45AC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingMachine.Core.Tests", "VendingMachine.Core.Tests\VendingMachine.Core.Tests.csproj", "{2E206E78-0FA9-46A4-8E8C-1AD30DE3C372}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachine.Core.Tests", "VendingMachine.Core.Tests\VendingMachine.Core.Tests.csproj", "{2E206E78-0FA9-46A4-8E8C-1AD30DE3C372}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

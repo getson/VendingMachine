@@ -6,8 +6,8 @@ using VendingMachine.CLI.Providers;
 using VendingMachine.Commands;
 using VendingMachine.Core;
 using VendingMachine.Core.Domain.Services;
+using VendingMachine.EventHandlers;
 using VendingMachine.Queries;
-using VendinMachine.EventHandlers;
 
 namespace VendingMachine.CLI.Infrastructure
 {

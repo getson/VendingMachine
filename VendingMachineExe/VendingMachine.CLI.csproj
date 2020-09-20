@@ -19,7 +19,7 @@
     <ProjectReference Include="..\VendingMachine.Commands\VendingMachine.Commands.csproj" />
     <ProjectReference Include="..\VendingMachine.Core\VendingMachine.Core.csproj" />
     <ProjectReference Include="..\VendingMachine.Queries\VendingMachine.Queries.csproj" />
-    <ProjectReference Include="..\VendinMachine.EventHandlers\VendinMachine.EventHandlers.csproj" />
+    <ProjectReference Include="..\VendingMachine.EventHandlers\VendingMachine.EventHandlers.csproj" />
   </ItemGroup>
 
 </Project>

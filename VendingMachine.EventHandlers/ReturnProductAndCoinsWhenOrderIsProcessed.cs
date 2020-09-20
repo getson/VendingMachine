@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using VendingMachine.Core;
 using VendingMachine.Events;
 
-namespace VendinMachine.EventHandlers
+namespace VendingMachine.EventHandlers
 {
     public class ReturnProductAndCoinsWhenOrderIsProcessed :
         INotificationHandler<OrderProcessed>
