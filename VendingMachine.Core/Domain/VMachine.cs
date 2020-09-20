@@ -69,7 +69,8 @@ namespace VendingMachine.Core
 
 
             var coinsToReturn = _changeCalculator.CalculateMinimum(
-                coinsWithQuantity.Select(x => new Coin((int)x.Key, x.Value)).ToList(),
+                coinsWithQuantity.Select(x => new Coin((int)x.Key, x.Value))
+                .OrderByDescending(x=>x.Denomination).ToList(),
                 change
             );
             if (coinsToReturn == null)
