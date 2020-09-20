@@ -6,8 +6,8 @@ using VendingMachine.CLI.Providers;
 using VendingMachine.Commands;
 using VendingMachine.Core;
 using VendingMachine.Core.Domain.Services;
+using VendingMachine.EventHandlers;
 using VendingMachine.Queries;
-using VendinMachine.EventHandlers;
 
 namespace VendingMachine.CLI.Infrastructure
 {
@@ -46,7 +46,8 @@ namespace VendingMachine.CLI.Infrastructure
                 .As<ICommandPrompt>()
                 .SingleInstance();
 
-            builder.Register(x => new CommandParser(x.Resolve<ICommandPrompt>(), _args))
+            builder.RegisterType<CommandParser>()
+                .WithParameter(new TypedParameter(typeof(string[]), _args))
                 .As<ICommandParser>()
                 .SingleInstance();
 

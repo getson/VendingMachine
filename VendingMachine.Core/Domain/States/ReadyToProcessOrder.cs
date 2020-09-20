@@ -20,7 +20,7 @@ namespace VendingMachine.Core
 
         public override void CancelOrder()
         {
-            VendingMachine.State = new ReadyToAcceptCoins(this);
+            VendingMachine.State = new ReadyToSellProduct(this);
         }
 
         public override void InsertCoins(IEnumerable<Coin> coins)

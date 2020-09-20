@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using VendingMachine.Core;
 using VendingMachine.Events;
 
-namespace VendinMachine.EventHandlers
+namespace VendingMachine.EventHandlers
 {
     public class ReturnProductAndCoinsWhenOrderIsProcessed :
         INotificationHandler<OrderProcessed>
@@ -19,6 +19,8 @@ namespace VendinMachine.EventHandlers
 
         public Task Handle(OrderProcessed notification, CancellationToken cancellationToken)
         {
+            _terminal.WriteLine();
+            _terminal.WriteLine("Thank you!");
             _terminal.WriteLine();
 
             _terminal.WriteLine("Please take the product and change!");

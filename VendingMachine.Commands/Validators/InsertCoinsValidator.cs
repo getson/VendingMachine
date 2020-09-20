@@ -15,7 +15,7 @@ namespace VendingMachine.Commands.Validators
 
             RuleForEach(x => x.Coins)
                 .Must(c => coinValues.Contains(c))
-                .WithMessage("Your coins are invalid!");
+                .WithMessage("Your coins are invalid! Please take the back the inserted coins!");
         }
     }
 }

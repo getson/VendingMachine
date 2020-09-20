@@ -31,7 +31,7 @@ namespace VendingMachine.Core
 
             if (diff > 0)
             {
-                throw new NotSufficentAmountException("Insufficient amount! /n Insert remaining amount", diff);
+                throw new NotSufficientAmountException("Insufficient amount!", string.Format("{0:N2} Euro", (decimal)diff / 100));
             }
             VendingMachine.State = new ReadyToProcessOrder(this);
         }

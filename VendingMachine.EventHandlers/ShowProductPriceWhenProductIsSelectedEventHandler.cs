@@ -1,11 +1,10 @@
 ﻿using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using VendingMachine.Core;
 using VendingMachine.Events;
 
-namespace VendinMachine.EventHandlers
+namespace VendingMachine.EventHandlers
 {
     public class ShowProductPriceWhenProductIsSelectedEventHandler : INotificationHandler<ProductSelected>
     {
