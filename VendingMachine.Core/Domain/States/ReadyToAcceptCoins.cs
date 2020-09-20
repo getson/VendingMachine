@@ -31,7 +31,7 @@ namespace VendingMachine.Core
 
             if (diff > 0)
             {
-                throw new NotFullyPaidException("The selected product is not fully paid, Please insert the remaining amount!", diff);
+                throw new NotSufficentAmountException("Insufficient amount! /n Insert remaining amount", diff);
             }
             VendingMachine.State = new ReadyToProcessOrder(this);
         }

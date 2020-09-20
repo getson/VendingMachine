@@ -128,7 +128,7 @@ namespace VendingMachine.CLI.Infrastructure
                             await _mediator.Send(new InsertCoins(coins));
                             break;
                         }
-                        catch (NotFullyPaidException ex)
+                        catch (NotSufficentAmountException ex)
                         {
                             _terminal.WriteLine($"{ex.Message}: {ex.RemainingAmount}");
 
