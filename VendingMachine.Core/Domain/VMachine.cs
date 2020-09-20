@@ -62,6 +62,11 @@ namespace VendingMachine.Core
                 );
             }
 
+            if (coinWithQuantitiesChange == null)
+            {
+                coinWithQuantitiesChange = new List<CoinWithQuantity>();
+            }
+
             State.ProcessOrder(coinWithQuantitiesChange);
 
             var coinsToReturn = new List<Coin>();
