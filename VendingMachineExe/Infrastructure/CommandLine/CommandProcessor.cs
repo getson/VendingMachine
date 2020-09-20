@@ -16,7 +16,10 @@ namespace VendingMachine.CLI.Infrastructure
         private readonly ICommandPrompt _prompt;
         private readonly ICommandProvider _command;
 
+        private const string _newPurchaseMessage = "Do you want to purchase another item [y/n]?";
         private const string _cancelPurchaseMessage = "Do you want to cancel the purchase [y/n]?";
+        private const string _cancelTransactionMessage = "Do you want to cancel the transaction [y/n]?";
+        private const string _new = "new";
         private const string _cancel = "cancel";
 
         public CommandProcessor(IMediator mediator, ITerminal terminal, ICommandPrompt prompt, ICommandProvider command)
@@ -65,68 +68,105 @@ namespace VendingMachine.CLI.Infrastructure
             {
                 try
                 {
-                    WriteSection("Purchase");
+                    WriteSection("Products");
 
-                    var product = _command.GetProduct();
-
-                    _mediator.Send(new SelectProduct(product))
+                    var products = _mediator.Send(new GetProducts())
                         .GetAwaiter()
                         .GetResult();
 
-                    var result = _mediator
-                        .Send(new GetSelectedProductPrice())
-                        .GetAwaiter()
-                        .GetResult();
+                    WriteProducts(products);
 
-                    _terminal.WriteLine($"The price for '{product}' is: {result.Amount}!");
+                    PurchaseOrder();
 
-                    if (_prompt.ReadBool(_cancel, _cancelPurchaseMessage, false))
+                    if (!_prompt.ReadBool(_new, _newPurchaseMessage, true))
                     {
-                        CancelOrder();
+                        _terminal.WriteLine("Bye!");
                         break;
                     }
-
-                    var coins = _command.GetCoins();
-
-                    while (true)
-                    {
-                        try
-                        {
-                            _mediator.Send(new InsertCoins(coins))
-                                .GetAwaiter()
-                                .GetResult();
-                            break;
-                        }
-                        catch (NotFullyPaidException ex)
-                        {
-                            _terminal.WriteLine($"{ex.Message}: {ex.RemainingAmount}");
-
-                            if (_prompt.ReadBool(_cancel, _cancelPurchaseMessage, false))
-                            {
-                                CancelOrder();
-                                return;
-                            }
-                        }
-                    }
-
-                    if (_prompt.ReadBool(_cancel, _cancelPurchaseMessage, false))
-                    {
-                        CancelOrder();
-                        break;
-                    }
-
-                    _mediator.Send(new ProcessOrder())
-                        .GetAwaiter()
-                        .GetResult();
-
-                    _terminal.WriteLine("The purchase completed!");
-                    _terminal.WriteLine("Thank you!");
-
-                    break;
                 }
                 catch (Exception ex)
                 {
                     _terminal.WriteError(ex.Message);
+                }
+            }
+
+            void PurchaseOrder()
+            {
+                while (true)
+                {
+                    try
+                    {
+                        WriteSection("Purchase");
+
+                        var product = _command.GetProduct();
+
+                        _mediator.Send(new SelectProduct(product))
+                            .GetAwaiter()
+                            .GetResult();
+
+                        var result = _mediator
+                            .Send(new GetSelectedProductPrice())
+                            .GetAwaiter()
+                            .GetResult();
+
+                        _terminal.WriteLine($"The price for '{product}' is: {result.Amount}!");
+
+                        if (_prompt.ReadBool(_cancel, _cancelPurchaseMessage, false))
+                        {
+                            CancelOrder();
+                            break;
+                        }
+
+                        var coins = _command.GetCoins();
+                        var firstTransaction = true;
+
+                        while (true)
+                        {
+                            try
+                            {
+                                if (!firstTransaction)
+                                {
+                                    var remaining = _command.GetCoins();
+                                    coins = coins.Concat(remaining).ToArray();
+                                }
+                                
+                                _mediator.Send(new InsertCoins(coins))
+                                    .GetAwaiter()
+                                    .GetResult();
+                                break;
+                            }
+                            catch (NotFullyPaidException ex)
+                            {
+                                _terminal.WriteLine($"{ex.Message}: {ex.RemainingAmount}");
+
+                                if (_prompt.ReadBool(_cancel, _cancelTransactionMessage, false))
+                                {
+                                    CancelOrder();
+                                    return;
+                                }
+                                firstTransaction = false;
+                            }
+                        }
+
+                        if (_prompt.ReadBool(_cancel, _cancelPurchaseMessage, false))
+                        {
+                            CancelOrder();
+                            break;
+                        }
+
+                        _mediator.Send(new ProcessOrder())
+                            .GetAwaiter()
+                            .GetResult();
+
+                        _terminal.WriteLine("The purchase completed!");
+                        _terminal.WriteLine("Thank you!");
+
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        _terminal.WriteError(ex.Message);
+                    }
                 }
             }
 
@@ -138,11 +178,26 @@ namespace VendingMachine.CLI.Infrastructure
                     .GetResult();
             }
         }
+
         private void WriteSection(string message)
         {
             _terminal.WriteLine();
             _terminal.WriteLine(">> " + message + ":");
             _terminal.WriteLine();
+        }
+
+        private void WriteProducts(IEnumerable<GetProductItemResult> products)
+        {
+            var maxProductNameWidth = 0;
+
+            foreach (var product in products)
+                maxProductNameWidth = maxProductNameWidth < product.ProductName.Length ? 
+                    product.ProductName.Length : maxProductNameWidth;
+
+            maxProductNameWidth += 2;
+
+            foreach (var product in products)
+                _terminal.WriteLine($" * {product.ProductName.PadRight(maxProductNameWidth)}: {product.Price}");
         }
     }
 }

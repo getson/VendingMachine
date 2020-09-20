@@ -5,6 +5,7 @@ using System.Reflection;
 using VendingMachine.CLI.Providers;
 using VendingMachine.Commands;
 using VendingMachine.Core;
+using VendingMachine.Core.Domain.Services;
 using VendingMachine.Queries;
 
 namespace VendingMachine.CLI.Infrastructure
@@ -27,6 +28,11 @@ namespace VendingMachine.CLI.Infrastructure
             builder.RegisterType<VendingMachineProvider>()
                 .As<IVendingMachineProvider>()
                 .SingleInstance();
+            
+            builder.RegisterType<ChangeCalculator>()
+                .As<IChangeCalculator>()
+                .SingleInstance();
+
         }
 
         private void RegisterCommandLineServices(ContainerBuilder builder)
