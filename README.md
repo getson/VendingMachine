@@ -12,6 +12,14 @@ The solution is build using .NET Core 3.1
  - CQRS, 
  - State
 
+
+Vending machine will accept all the requests through the terminal.
+# Request categories 
+ - a request that has side effects is interpreted as a "Command" (Select Product, Insert Coins, etc...)
+ - a request for getting some info from the machine is interpreted as a "Query" (GetProductsWithPrices)
+ 
+ Notifications for the user are managed through events.
+
 For the sake of brevity, to manage the state of Vending Machine I have used State pattern.
 When the the app is started I create an instance of VendingMachine and it will alter it's state according to user commands.
 
@@ -23,14 +31,6 @@ Vending Machine has 3 states:
  - ReadyToProcessOrder- it means that the machine is in final state, when it will process the transaction.
                         In this state the machine is able to process requests "Process Order", "Cancel Order", after processing order it turns back the change
                         or all inserted coins.
-
-Vending machine will accept all the requests through the terminal.
-# Request categories 
- - a request that has side effects is interpreted as a "Command" (Select Product, Insert Coins, etc...)
- - a request for getting some info from the machine is interpreted as a "Query" (GetProductsWithPrices)
- 
- Notifications for the user are managed through events.
-
 
 
 # Supported features:

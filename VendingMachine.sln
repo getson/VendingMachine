@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachine.CLI", "VendingMachineExe\VendingMachine.CLI.csproj", "{17986706-D431-4483-AFDB-856B225FA0DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachine.CLI", "VendingMachine.CLI\VendingMachine.CLI.csproj", "{17986706-D431-4483-AFDB-856B225FA0DC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachine.Core", "VendingMachine.Core\VendingMachine.Core.csproj", "{AB0CDB0B-BD31-43CF-B9ED-8EEC964E8EF1}"
 EndProject
