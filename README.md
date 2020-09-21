@@ -26,8 +26,8 @@ Vending Machine has 3 states:
 
 Vending machine will accept all the requests through the terminal.
 # Request categories 
- - a request that has side effects, it is interpreted as a "Command" (Select Product, Insert Coins, etc...)
- - a request for getting some info from the machine, is interpreted as a "Query" (GetProductsWithPrices)
+ - a request that has side effects is interpreted as a "Command" (Select Product, Insert Coins, etc...)
+ - a request for getting some info from the machine is interpreted as a "Query" (GetProductsWithPrices)
  
  Notifications for the user are managed through events.
 
